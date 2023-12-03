@@ -39,7 +39,33 @@ function findValidGames(amounts) {
     }
   });
   console.log(idTotals);
-  console.log(invalidGames);
 }
 
 findValidGames(amounts);
+
+function findSumOfPowers() {
+  let powerTotal = 0;
+  fileContents.forEach((game) => {
+    const rounds = game.split(";");
+
+    let highestRed = 0;
+    let highestGreen = 0;
+    let highestBlue = 0;
+
+    rounds.forEach((round) => {
+      const redBlocks = parseInt(round.match(redRegex)?.[1]);
+      const greenBlocks = parseInt(round.match(greenRegex)?.[1]);
+      const blueBlocks = parseInt(round.match(blueRegex)?.[1]);
+
+      if (highestRed < redBlocks) highestRed = redBlocks;
+      if (highestGreen < greenBlocks) highestGreen = greenBlocks;
+      if (highestBlue < blueBlocks) highestBlue = blueBlocks;
+    });
+
+    const totalPower = highestRed * highestGreen * highestBlue;
+    powerTotal += totalPower;
+  });
+  console.log(powerTotal);
+}
+
+findSumOfPowers();
